@@ -1,0 +1,12 @@
+{
+  "name": "chess",
+  "app_id": "59521729",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

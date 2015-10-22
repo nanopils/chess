@@ -3,9 +3,14 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope) {})
 
 
-.controller('GamesListCtrl', function($scope, GameList) {
+.controller('GamesListCtrl', function($rootScope, $scope, GameList) {
   var getList = $scope.refreshList = function () {
-    GameList.all()
+  var tournaments = $rootScope.chess.firebaseRef.child('tournaments');
+  tournaments.on('value', function (snapshot) {
+    console.log('Got data');
+    console.log(snapshot.val());
+  });
+  GameList.all()
     .success(function(data, status, headers, config) {
       $scope.games = data;
     })

@@ -1,10 +1,12 @@
 angular.module('starter.services', [])
 
-.factory('GameList', function($http) {
+.factory('GameList', function($http, $rootScope, firebase) {
   // Might use a resource here that returns a JSON array
   
-  var baseUrl = 'http://mockem.duckdns.org:2355/api/meter';
-
+  // var newRef = tournaments.push({
+  //   "name": "test"
+  // });
+  // console.log('New ID =' + newRef.toString());
   // var showToastMessage = function (message, duration, location) {
   //   duration = duration || 'short';
   //   location = location || 'bottom';
@@ -21,13 +23,13 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
-      return $http.get(baseUrl);
+      return $http.get($rootScope.chess.restBaseUrl);
     },
     // remove: function(game) {
     //   games.splice(games.indexOf(game), 1);
     // },
     get: function(gameId) {
-      return $http.get(baseUrl + '/' + gameId);
+      return $http.get($rootScope.chess.restBaseUrl + '/' + gameId);
       // for (var i = 0; i < games.length; i++) {
       //   if (games[i].id === parseInt(gameId)) {
       //     return games[i];
@@ -36,14 +38,15 @@ angular.module('starter.services', [])
       // return null;
     },
     update: function (gameId, updateData) {
-      return $http.put(baseUrl + '/' + gameId, updateData);
+      return $http.put($rootScope.chess.restBaseUrl + '/' + gameId, updateData);
     }
     // showToast: function (message, duration, location) {
     //   showToastMessage(message, duration, location);
     // }
   };
 })
-.factory('ChessBoard', function (chessboard, chess) {
+
+.factory('ChessBoard', function ($rootScope, chessboard, chess) {
   return {
     init: function (game) {
       // var board = ChessBoard('board', 'start');
@@ -193,6 +196,11 @@ chessboard.factory('chessboard', ['$window', function($window) {
 var chess = angular.module('chess', []);
 chess.factory('chess', ['$window', function($window) {
   return $window.Chess; // assumes chess has already been loaded on the page
+}]);
+
+var firebase = angular.module('firebase', []);
+firebase.factory('firebase', ['$window', function($window) {
+  return $window.Firebase; // assumes Firebase has already been loaded on the page
 }]);
 
 var underscore = angular.module('underscore', []);
